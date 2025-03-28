@@ -71,8 +71,8 @@ def admin_dash():
 @app.route('/admin/add_subject',methods=['POST','GET'])
 def add_subject():
     if request.method=='POST':
-        sname=request.form['sname']
-        sdesc=request.form['sdesc']
+        sname=request.form['sname'].lower()
+        sdesc=request.form['sdesc'].lower()
         subjects=Subject.query.get(sname)
         if subjects:
             return "Subject already exists"
@@ -86,8 +86,8 @@ def add_subject():
 def edit_subject(id):
     subject=Subject.query.filter_by(id=id).first()
     if request.method=='POST':
-        sname=request.form['sname']
-        sdesc=request.form['sdesc']
+        sname=request.form['sname'].lower()
+        sdesc=request.form['sdesc'].lower()
         subject.name=sname
         subject.sdesc=sdesc
         db.session.commit()
@@ -121,8 +121,8 @@ def delete_subject(id):
 @app.route('/admin/add_chapter/<int:id>',methods=['POST','GET'])
 def add_chapter(id):
     if request.method=='POST':
-        cname=request.form['cname']
-        cdesc=request.form['cdesc']
+        cname=request.form['cname'].lower()
+        cdesc=request.form['cdesc'].lower()
         chapters=Chapter.query.get(cname)
         if chapters:
             return "Chapter already exists"
@@ -136,8 +136,8 @@ def add_chapter(id):
 def edit_chapter(id):
     chapter=Chapter.query.filter_by(id=id).first()
     if request.method=='POST':
-        sname=request.form['cname']
-        sdesc=request.form['cdesc']
+        sname=request.form['cname'].lower()
+        sdesc=request.form['cdesc'].lower()
         chapter.name=sname
         chapter.cdesc=sdesc
         db.session.commit()
@@ -252,15 +252,22 @@ def admin_summary():
     users=User.query.all()
     return render_template('admin_summary.html',scores=scores,users=users,chapters=chapters,quizes=quizes,questions=questions,subjects=subjects)
 #Running the flask app
-@app.route('/admin_dash/search',methods=['POST','GET'])
+@app.route('/admin_dash/search',methods=['GET'])
 def admin_search():
-    subjects=Subject.query.all()
-    chapters=Chapter.query.all()
-    quizes=Quiz.query.all()
-    questions=Question.query.all()
-    scores=Scores.query.all()
-    users=User.query.all()
-    return render_template('admin_search.html',scores=scores,users=users,chapters=chapters,quizes=quizes,questions=questions,subjects=subjects)
+    return render_template('admin_dash_search.html')
+@app.route('/admin_dash/search_result',methods=['GET'])
+def admin_search_result():
+    key=request.args.get('type')
+    value=request.args.get('search').strip().lower()
+    if key=='Subject':
+            result=Subject.query.filter_by(name=value).all()
+    elif key=='Chapter':
+            result=Chapter.query.filter_by(name=value).all()
+    elif key=='Quiz':
+            result=Quiz.query.filter_by(id=value).all()
+    elif key=='User':
+            result=User.query.filter_by(name=value).all()      
+    return render_template('admin_dash_search_result.html',result=result,key=key)
 
 #Again Users Part
 @app.route('/user_dash/<int:id>',methods=['POST','GET'])
@@ -270,15 +277,26 @@ def user_dash(id):
     
     return render_template('user_dash.html',user=user,quizes=quizes)
 
-@app.route('/user_dash/search/<int:id>',methods=['POST','GET'])
+@app.route('/user_dash/search/<int:id>',methods=['GET'])
 def user_search(id):
     user=User.query.filter_by(id=id).first()
-    subjects=Subject.query.all()
-    chapters=Chapter.query.all()
-    quizes=Quiz.query.all()
-    questions=Question.query.all()
-    scores=Scores.query.all()
-    return render_template('user_search.html',scores=scores,user=user,chapters=chapters,quizes=quizes,questions=questions,subjects=subjects)
+    return render_template('user_search.html',user=user)
+
+@app.route('/user_dash/search_result/<int:id>',methods=['GET'])
+def user_search_result(id):
+    user=User.query.filter_by(id=id).first()
+    key=request.args.get('type')
+    value=request.args.get('search').strip().lower()
+    if key=='Subject':
+            result=Subject.query.filter_by(name=value).all()
+    elif key=='Chapter':
+            result=Chapter.query.filter_by(name=value).all()
+    elif key=='Quiz':
+            result=Quiz.query.filter_by(id=value).all()
+
+    return render_template('user_search_result.html',result=result,key=key,user=user)
+
+
 
 @app.route('/user_dash/summary/<int:id>',methods=['POST','GET'])
 def user_summary(id):

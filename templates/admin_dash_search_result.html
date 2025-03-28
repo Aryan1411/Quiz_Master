@@ -57,29 +57,125 @@ Admin
 
 
 <div id="dashboard">
-  <h3>Search</h3>
+  <h3>Search Results</h3>
   <br>
   <hr>
+  <a href="/admin_dash/search" class="btn btn-primary">Back to Search</a>
   <br>
+
     
-<form  action="/admin_dash/search_result ">
+  {%if key=='Subject'%}
+<table class="table">
+  <thead>
 
-  <label for="type" >Search Type</label>
-  <select  id="type" name="type" required>
-    <option  disabled>Select a Valid Option</option>
-    <option value="Subject">Subjects</option>
-    <option value="Chapter">Chapters</option>
-    <option value="Quiz">Quizzes</option>
-    <option value="User">Users</option>
-  </select>
+    <tr>
+      <th scope="col">Subject ID</th>
+      <th scope="col">Subject Name</th>
+      <th scope="col">Subject Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for s in result%}
+    <tr>
+      <th scope="row">{{s.id}}</th>
+      
+      <td>{{s.name}}</td>
+      <td>{{s.sdesc}}</td>
+    </tr>
+    {%endfor%}
+    
 
-
-  <label for="search" >Search</label>
-  <input type="text"  id="search" name="search" placeholder="Enter Here" required>
-
-<button type="submit" class="btn btn-primary">Search</button>
-</form>
+   
+  </tbody>
   
+</table>
+{%endif%}
+
+{%if key=='Chapter'%}
+<table class="table">
+  <thead>
+
+    <tr>
+      <th scope="col">Chapter ID</th>
+      <th scope="col">Chapter Name</th>
+      <th scope="col">Chapter Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for c in result%}
+    <tr>
+      <th scope="row">{{c.id}}</th>
+      <td>{{c.name}}</td>
+      <td>{{c.cdesc}}</td>
+      
+    </tr>
+    {%endfor%}
+    
+
+   
+  </tbody>
+</table>
+{%endif%}
+
+{%if key=='Quiz'%}
+<table class="table">
+  <thead>
+
+    <tr>
+      <th scope="col">Quiz ID</th>
+      <th scope="col">Date</th>
+      <th scope="col">Duration</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for q in result%}
+    <tr>
+      <th scope="row">{{q.id}}</th>
+      <td>{{q.date_of_quiz}}</td>
+      <td>{{q.time_duration}}</td>
+      
+    </tr>
+    {%endfor%}
+    
+
+   
+  </tbody>
+</table>
+{%endif%}
+
+{%if key=='User'%}
+<table class="table">
+  <thead>
+
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Qualification</th>
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for u in result%}
+    <tr>
+      <th scope="row">{{u.id}}</th>
+      <td>{{u.name}}</td>
+      <td>{{u.dob}}</td>
+      <td>{{u.qualification}}</td>
+      
+    </tr>
+    {%endfor%}
+    
+
+   
+  </tbody>
+</table>
+{%endif%}
+
 
 </div>
 {% endblock %}

@@ -18,22 +18,7 @@ from application.controllers import *
 #Initialising the database
 
 #db.create_all() 
-
-
-
-
-
-
-
-
-
-
-
 #Running the flask app
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

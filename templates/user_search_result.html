@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Admin
+    {{user.name}}
 {% endblock %}
 
 {% block content %}
@@ -30,23 +30,23 @@ Admin
       </div>
     </div>
   </nav>
-
+  
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/admin_dash">Subjects</a>
+      <a class="navbar-brand" href="/user_dash/{{user.id}}">Dashboard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/admin_dash/quiz">Quiz</a>
+            <a class="nav-link active" aria-current="page" href="/user_dash/score/{{user.id}}">Score</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin_dash/summary">Summary</a>
+            <a class="nav-link" href="/user_dash/summary/{{user.id}}">Summary</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin_dash/search">Search</a>
+            <a class="nav-link" href="/user_dash/search/{{user.id}}">Search</a>
           </li>
         </ul>
 
@@ -56,30 +56,93 @@ Admin
   </nav>
 
 
-<div id="dashboard">
-  <h3>Search</h3>
-  <br>
-  <hr>
-  <br>
+<h3>Welcome {{user.name}}</h3>
+<br>
+<hr>
+<br>
+{%if key=='Subject'%}
+<table class="table">
+  <thead>
+
+    <tr>
+      <th scope="col">Subject ID</th>
+      <th scope="col">Subject Name</th>
+      <th scope="col">Subject Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for s in result%}
+    <tr>
+      <th scope="row">{{s.id}}</th>
+      
+      <td>{{s.name}}</td>
+      <td>{{s.sdesc}}</td>
+    </tr>
+    {%endfor%}
     
-<form  action="/admin_dash/search_result ">
 
-  <label for="type" >Search Type</label>
-  <select  id="type" name="type" required>
-    <option  disabled>Select a Valid Option</option>
-    <option value="Subject">Subjects</option>
-    <option value="Chapter">Chapters</option>
-    <option value="Quiz">Quizzes</option>
-    <option value="User">Users</option>
-  </select>
+   
+  </tbody>
+  <a href="/user_dash/search/{{user.id}}" class="btn btn-primary">Back to Search</a>
+</table>
+{%endif%}
 
+{%if key=='Chapter'%}
+<table class="table">
+  <thead>
 
-  <label for="search" >Search</label>
-  <input type="text"  id="search" name="search" placeholder="Enter Here" required>
+    <tr>
+      <th scope="col">Chapter ID</th>
+      <th scope="col">Chapter Name</th>
+      <th scope="col">Chapter Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for c in result%}
+    <tr>
+      <th scope="row">{{c.id}}</th>
+      <td>{{c.name}}</td>
+      <td>{{c.cdesc}}</td>
+      
+    </tr>
+    {%endfor%}
+    
 
-<button type="submit" class="btn btn-primary">Search</button>
-</form>
-  
+   
+  </tbody>
+</table>
+{%endif%}
+
+{%if key=='Quiz'%}
+<table class="table">
+  <thead>
+
+    <tr>
+      <th scope="col">Quiz ID</th>
+      <th scope="col">Date</th>
+      <th scope="col">Duration</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {%for q in result%}
+    <tr>
+      <th scope="row">{{q.id}}</th>
+      <td>{{q.date_of_quiz}}</td>
+      <td>{{q.time_duration}}</td>
+      
+    </tr>
+    {%endfor%}
+    
+
+   
+  </tbody>
+</table>
+{%endif%}
+
 
 </div>
+<script src="/static/script.js"></script>
 {% endblock %}

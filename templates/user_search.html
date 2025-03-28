@@ -61,7 +61,7 @@
 <hr>
 <br>
 <div>
-<form>
+<form  action="/user_dash/search_result/{{user.id}}">
 
     <label for="type" >Search Type</label>
     <select  id="type" name="type" required>
@@ -69,7 +69,6 @@
       <option value="Subject">Subjects</option>
       <option value="Chapter">Chapters</option>
       <option value="Quiz">Quizzes</option>
-      <option value="Question">Questions</option>
     </select>
 
   
@@ -79,28 +78,7 @@
   <button type="submit" class="btn btn-primary">Search</button>
 </form>
 </div>
-<table class="table">
-  <thead>
-    {%for quiz in quizes%}
-    <tr>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      {%endfor%}
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      
-    </tr>
-    
 
-   
-  </tbody>
-</table>
-</div>
+
 <script src="/static/script.js"></script>
 {% endblock %}

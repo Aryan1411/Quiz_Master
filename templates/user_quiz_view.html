@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{user.name}}
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Quiz Master</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">User Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">New User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Admin Login</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/user_dash/{{user.id}}">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user_dash/score/{{user.id}}">Score</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_dash/summary/{{user.id}}">Summary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_dash/search/{{user.id}}">Search</a>
+          </li>
+        </ul>
+
+        
+      </div>
+    </div>
+  </nav>
+
+
+<h3>Welcome {{user.name}}</h3>
+<br>
+<hr>
+<br>
+<div>
+  <h3>Quiz Details</h3>
+  <div class="card" style="width: 60rem;">
+    <div class="card-header">
+      Quiz Id : {{quiz.id}}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Subject : {{subject.name}}</li>
+      <li class="list-group-item">Chapter : {{chapter.name}}</li>
+      <li class="list-group-item">Date of Quiz : {{quiz.date_of_quiz}}</li>
+      <li class="list-group-item">Duration (HH:MM:SS) : {{quiz.time_duration}}</li>
+      <li class="list-group-item">Remarks : {{quiz.remarks}}</li>
+      <li class="list-group-item">
+        <a href="/user_dash/quiz_attempt/{{user.id}}/{{quiz.id}}" class="btn btn-primary">Attempt Quiz</a>
+        <a href="/user_dash/{{user.id}}" class="btn btn-primary">Back To Dashboard</a>
+      </li>
+    </ul>
+  </div>
+
+
+</div>
+{% endblock %}

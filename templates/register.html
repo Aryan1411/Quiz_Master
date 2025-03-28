@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Quiz Master</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">User Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">New User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Admin Login</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div id="register">
+    <h1 class="r1">Register</h1>
+    <form action="/register" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="qual">Qualification</label>
+        <select name="qual" id="qual" required>
+          <option value="12th">12th</option>
+          <option value="UG">UG</option>
+          <option value="12th">PG</option>
+          <option value="Phd">Phd</option>
+        </select> 
+
+        <label for="dob">Date Of Birth</label>
+        <input type="date" name="dob" id="dob" required>
+
+        <button type="submit">Register</button>
+    </form>
+    <p class="r4">Already have an account? <a href="/login">Login</a></p>
+
+</div>
+
+{% endblock %}

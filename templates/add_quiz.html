@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Quiz Master</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">User Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">New User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Admin Login</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="register">
+
+  <h1 class="r1">Create Quiz</h1>
+  <form method="post">
+    
+    <label for="cname">Chapter</label>
+    <select id="cname" name="cname">
+      {%for chapter in chapters%}
+      <option value="{{chapter.id}}">{{chapter.name}}</option>
+      {%endfor%}
+      
+    </select>
+
+    <label for="date">Date</label>
+    <input type="date" name="date" id="date" required>
+    <label for="time">Duration</label>
+    <input type="time" name="time" id="time" required>
+    <label for="remark">Remark</label>
+    <input type="text" name="remark" id="remark" required>
+
+    <button type="submit">Add</button>
+  </form>
+
+</div>
+{% endblock %}

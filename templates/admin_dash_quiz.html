@@ -58,26 +58,26 @@ Admin
 
 <div id="dashboard">
     <div>
-      <a href="/admin_dash/add_quiz">Create Quiz</a>
+      <a class="btn btn-success" href="/admin_dash/add_quiz">Create Quiz</a>
       <br>
-
+      <div class="d-flex justify-content-center">
       {% for quiz in quizes %}
 
-      <div class="card" style="width: 50rem;">
+      <div class="card" style="width: 100rem;">
         <div class="card-body">
-          <h5 class="card-title">Quiz :{{quiz.id}}</h5>
+          <h5 class="card-title d-flex justify-content-center">Quiz :{{quiz.id}}</h5>
           {% for chapter in chapters %}
           {% if chapter.id == quiz.chapter_id %}
-          <h6 class="card-subtitle mb-2 text-body-secondary">{{chapter.name}}</h6>
+          <h6 class="card-subtitle mb-2 d-flex justify-content-center"text-body-secondary">{{chapter.name}}</h6>
           {% endif %}
           {% endfor %}
-          <a href="/admin_dash/quiz/delete/{{quiz.id}}" class="card-link">Delete Quiz</a>
+          <a class="btn btn-danger" href="/admin_dash/quiz/delete/{{quiz.id}}" class="card-link">Delete Quiz</a>
           <br>
           <hr>
           
           <table class="table">
             <h5>Questions</h5>
-            <a href="/admin_dash/quiz/add_question/{{quiz.id}}" class="card-link">+ Add Quetions</a>
+            <a class="btn btn-outline-success" href="/admin_dash/quiz/add_question/{{quiz.id}}" class="card-link">+ Add Quetions</a>
             <thead>
               <tr>
                 <th scope="col">S.No</th>
@@ -91,8 +91,8 @@ Admin
               <tr>
                 <th scope="row">{{que.id}}</th>
                 <td>{{que.que_statement}}</td>
-                <td><a href="/admin_dash/quiz/edit_que/{{que.id}}">Edit</a></td>
-                <td><a href="/admin_dash/quiz/delete_que/{{que.id}}">Delete</a></td>
+                <td><a class="btn btn-outline-info" href="/admin_dash/quiz/edit_que/{{que.id}}">Edit</a></td>
+                <td><a class="btn btn-outline-danger" href="/admin_dash/quiz/delete_que/{{que.id}}">Delete</a></td>
               </tr>
               {%endfor%}
               
@@ -103,7 +103,7 @@ Admin
         </div>
       </div>
       {% endfor %}
-
+    </div>
     </div>
 </div>
 {% endblock %}

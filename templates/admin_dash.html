@@ -65,24 +65,25 @@ Admin
         <hr>
         
 
-        <a href="/admin/add_subject">+Add Subject</a>
+        <a class="btn btn-success" href="/admin/add_subject">+Add Subject</a>
         
         </div>
         <br>
         {% for subject in subjects %}
-        <div class="card" style="width: 60rem;">
+        <div class="d-flex justify-content-center">
+        <div class="card" style="width: 100rem;">
             <div class="card-body">
               <h5 class="card-title">{{subject.name}}</h5>
               <p class="card-text">{{subject.sdesc}}</p>
-              <a href='/admin/edit_subject/{{subject.id}}' class="card-link">Edit Subject</a>
-              <a href='/admin/delete_subject/{{subject.id}}' class="card-link">Delete Subject</a>
+              <a class="btn btn-outline-primary" href='/admin/edit_subject/{{subject.id}}' class="card-link">Edit Subject</a>
+              <a class="btn btn-outline-danger" href='/admin/delete_subject/{{subject.id}}' class="card-link">Delete Subject</a>
 
               
-              
-              <div class="card" style="width: 50rem;">
+              <div class="d-flex justify-content-center">
+              <div class="card" style="width: 65rem;">
                 <div class="card-header">
                   Chapters :
-                  <a href="/admin/add_chapter/{{subject.id}}">+Add Chapter</a>
+                  <a class="btn btn-success" href="/admin/add_chapter/{{subject.id}}">+Add Chapter</a>
                 </div>
                 {% for chapter in chapters %}
                 {% if chapter.sub_id == subject.id %}
@@ -90,8 +91,8 @@ Admin
                   <li class="list-group-item">
                     <h5>{{chapter.name}}</h5>
                     <p>{{chapter.cdesc}}</p>
-                    <a href='/admin/edit_chapter/{{chapter.id}}' class="card-link">Edit Chapter</a>
-                    <a href='/admin/delete_chapter/{{chapter.id}}' class="card-link">Delete Chapter</a>
+                    <a class="btn btn-info" href='/admin/edit_chapter/{{chapter.id}}' class="card-link">Edit Chapter</a>
+                    <a class="btn btn-danger" href='/admin/delete_chapter/{{chapter.id}}' class="card-link">Delete Chapter</a>
                   </li>
                   
                   
@@ -99,11 +100,12 @@ Admin
                 {% endif %}
                 {% endfor %}
               </div>
+            </div>
                 
             </div>
           </div>
           
-
+        </div>
             {% endfor %}
         
         <br>

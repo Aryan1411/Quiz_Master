@@ -3,6 +3,11 @@ from flask import  request, jsonify, render_template, redirect
 from app import db,User,Subject,Chapter,Quiz,Question,Scores
 from jinja2 import Template
 from datetime import datetime, date,time
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
+
+
 #Creating routes for the web app
 
 @app.route('/')
@@ -250,7 +255,66 @@ def admin_summary():
     questions=Question.query.all()
     scores=Scores.query.all()
     users=User.query.all()
-    return render_template('admin_summary.html',scores=scores,users=users,chapters=chapters,quizes=quizes,questions=questions,subjects=subjects)
+    max_id=[]
+    max_score=[]
+    
+    for q in quizes:
+        max=0
+        for s in scores:
+            if s.total_scored>max:
+                max=s.total_scored
+        max_id.append(q.id)
+        max_score.append(max)
+
+    sum=0
+    count=0
+    avg=0
+    if scores:
+        for s in scores:
+            count+=1
+            sum+=s.total_scored
+        avg=sum/count
+
+    subject_attempts = {}
+    for sub in subjects:
+        subject_attempts[sub.name] = 0 
+        for chapter in chapters:
+            if chapter.sub_id == sub.id:
+                for quiz in quizes:
+                    if quiz.chapter_id == chapter.id:  # Match quiz to chapter
+                        for score in scores:
+                            if score.quiz_id == quiz.id:
+                                subject_attempts[sub.name] += 1
+
+    # Create chart with Matplotlib
+    labels=[]
+    sizes=[]
+    for k in subject_attempts:
+        labels.append(k)
+        sizes.append(subject_attempts[k])
+    
+
+    
+    plt.pie(sizes, labels=labels,autopct="%1.1f%%")
+    plt.title("Quiz Attempts by Users")
+    plt.tight_layout()
+    #e chart as an image file
+    plt.savefig("static/images/pie.png" )
+    plt.close()
+    plt.clf()
+
+    plt.bar(max_score,max_id)
+    plt.xlabel("Quiz id")
+    plt.ylabel("scores")
+    plt.title("Quiz wise highest scores")
+    plt.savefig("static/images/bar.png")
+    plt.close()
+    plt.clf()
+
+
+        
+
+    return render_template('admin_summary.html',scores=scores,users=users,chapters=chapters,quizes=quizes,questions=questions,subjects=subjects,avg=avg)
 #Running the flask app
 @app.route('/admin_dash/search',methods=['GET'])
 def admin_search():
@@ -302,23 +366,55 @@ def user_search_result(id):
 def user_summary(id):
     user=User.query.filter_by(id=id).first()
     scores=Scores.query.filter_by(user_id=id).all()
-    quizes=[]
-    chapters=[]
-    subjects=[]
-    for s in scores:
-        quiz=Quiz.query.filter_by(id=s.quiz_id).all()
-        for q in quiz:
-            quizes.append(q)
-    for quiz in quizes:
-        chapter=Chapter.query.filter_by(id=quiz.chapter_id).all()
-        for c in chapter:
-            chapters.append(c)
-    for chapter in chapters:
-        subject=Subject.query.filter_by(id=chapter.sub_id).all()
-        for s in subject:
-            subjects.append(s)
+    subjects=Subject.query.all()
+    chapters=Chapter.query.all()
+    quizes=Quiz.query.all()
     
-    return render_template('user_summary.html',scores=scores,user=user,chapters=chapters,subjects=subjects,quizes=quizes)
+    sum=0
+    count=0
+    max=0
+    avg=0
+    if scores:
+        
+        for s in scores:
+            count+=1
+            sum+=s.total_scored
+            if s.total_scored>max:
+                max=s.total_scored
+        avg=sum/count
+
+    subject_attempts = {}
+    for sub in subjects:
+        subject_attempts[sub.name] = 0 
+        for chapter in chapters:
+            if chapter.sub_id == sub.id:
+                for quiz in quizes:
+                    if quiz.chapter_id == chapter.id:
+                        for score in scores:
+                            if score.quiz_id == quiz.id:
+                                subject_attempts[sub.name] += 1
+
+    # Create chart with Matplotlib
+    labels=[]
+    sizes=[]
+    for k in subject_attempts:
+        labels.append(k)
+        sizes.append(subject_attempts[k])
+    
+
+    if scores:
+        plt.pie(sizes, labels=labels,autopct="%1.1f%%")
+        plt.title("Subject Wise Quiz Attempts")
+        plt.tight_layout()
+
+        # Save chart as an image file
+        plt.savefig("static/images/pie1.png" )
+        plt.close()
+        plt.clf()
+
+        
+
+    return render_template('user_summary.html',scores=scores,user=user,chapters=chapters,quizes=quizes,subjects=subjects,avg=avg,max=max)
 
 @app.route('/user_dash/score/<int:id>',methods=['POST','GET'])
 def user_score(id):
@@ -347,11 +443,16 @@ def user_quiz_attempt(user_id,quiz_id):
     quiz=Quiz.query.filter_by(id=quiz_id).first()
     questions=Question.query.filter_by(quiz_id=quiz_id).all()
     if request.method=='POST':
-        score=0
+        sc=0
+        q=0
         for que in questions:
+            q+=1
             if que.ans==request.form[str(que.id)]:
                 score+=1
-        
+        if q!=0:
+            score=(sc/q)*100
+        else:
+            score=0
         time_stamp=datetime.now()
         score=Scores(user_id=user_id,quiz_id=quiz_id,time_stamp=time_stamp,total_scored=score)
         db.session.add(score)

@@ -69,7 +69,7 @@
         <th scope="col">Quiz ID</th>
         <th scope="col">No. of Questions</th>
         <th scope="col">Date</th>
-        <th scope="col">Score</th>
+        <th scope="col">Score(%)</th>
       </tr>
     </thead>
     <tbody>
@@ -82,9 +82,7 @@
           {%endif%}
         </td>
         <td>{{score.time_stamp}}</td>
-        <td>{{score.total_scored}}/{%if quiz.id==score.quiz_id%}
-          {{quiz.questions | length}}
-          {%endif%}</td>
+        <td>{{score.total_scored}}</td>
       </tr>
       {%endfor%}
       {%endfor%}  

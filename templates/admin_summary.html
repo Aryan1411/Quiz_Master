@@ -57,9 +57,69 @@ Admin
 
 
 <div id="summary">
-  <div>
+ 
+  <div class="d-flex justify-content-center">
+    <div class="card" style="width: 100rem;">
+      <div class="d-flex justify-content-center card-body">
+        <h3>Quiz Summary</h3>
+        <div class="card" style="width: 95rem;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Total Subjects</th>
+                <th scope="col">Total Chapters</th>
+                <th scope="col">Total Quizes</th>
+                <th scope="col">Total Users</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{{subjects |length}}</th>
+                <td>{{chapters | length}}</td>
+                <td>{{quizes | length}}</td>
+                <td>{{users | length -1 }}</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+      
+      <div class="d-flex justify-content-center">
+        <div class="card" style="width: 100rem;">
+          <div class="d-flex justify-content-center card-body">
+            <h3>User Summary</h3>
+            <div class="card" style="width: 95rem;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Total Users
+                    <th scope="col">Users Attempted quiz</th>
+                    <th scope="col">Average Quiz Score</th>
+            
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">{{users |length -1}}</th>
+                    <td>{{scores | length}}</td>
+                    <td>{{avg}}</td>
+                    
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+    </div>
+
     
   </div>
+  <div><img src="/static/images/pie.png"></div>
+  <img src="/static/images/bar.png">
 
 </div>
 {% endblock %}

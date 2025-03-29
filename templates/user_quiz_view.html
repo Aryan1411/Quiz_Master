@@ -60,9 +60,10 @@
 <br>
 <hr>
 <br>
-<div>
-  <h3>Quiz Details</h3>
-  <div class="card" style="width: 60rem;">
+<h3 class="d-flex justify-content-center">Quiz Details</h3>
+<div class="d-flex justify-content-center">
+  
+  <div class="card" style="width: 80rem;">
     <div class="card-header">
       Quiz Id : {{quiz.id}}
     </div>
@@ -73,8 +74,8 @@
       <li class="list-group-item">Duration (HH:MM:SS) : {{quiz.time_duration}}</li>
       <li class="list-group-item">Remarks : {{quiz.remarks}}</li>
       <li class="list-group-item">
-        <a href="/user_dash/quiz_attempt/{{user.id}}/{{quiz.id}}" class="btn btn-primary">Attempt Quiz</a>
-        <a href="/user_dash/{{user.id}}" class="btn btn-primary">Back To Dashboard</a>
+        <a class="btn btn-outline-success" href="/user_dash/quiz_attempt/{{user.id}}/{{quiz.id}}" class="btn btn-primary">Attempt Quiz</a>
+        <a class="btn btn-outline-info" href="/user_dash/{{user.id}}" class="btn btn-primary">Back To Dashboard</a>
       </li>
     </ul>
   </div>

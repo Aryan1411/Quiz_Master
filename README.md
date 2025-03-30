@@ -5,14 +5,22 @@
 1. Open your terminal in **Command Prompt Mode**
 2. Clone this repository to your system using command 
 ```python
-git clone <your-repository-url>
+git clone https://github.com/Aryan1411/Quiz_Master.git
 ```
 3. Navigate to the project directory 
 ```python
-cd <your-project-directory>
+cd Quiz_Master
 ```
-4. Run the server by executing the app.py file 
+4. Activate virtual environment by
+```python
+myenv/Scripts/activate
+```
+5. Install required libraries
+```python
+pip install -r requirements.txt
+```
+6. Run the server by executing the app.py file 
 ```python 
 python app.py
 ```
-5. Click on the localhost link provided in the terminal (use `Ctrl + Click` on the link).
+7. Click on the localhost link provided in the terminal (use `Ctrl + Click` on the link).
